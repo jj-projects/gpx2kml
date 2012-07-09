@@ -1,0 +1,47 @@
+<project name="gpx2kml" default="run" basedir="..">
+	
+    <property name="sourceDir" 	value="src" />
+    <property name="outputDir" 	value="build/classes" />
+    <property name="distDir" 	value="dist" />
+    <property name="libDir"     value="libs"/>
+    <property name="main-class" value="de.jjprojects.gpx2kml.gpx2kml"/>
+
+    <path id="classpath">
+        <fileset dir="${libDir}" includes="**/*.jar"/>
+    </path>
+
+   <target name="clean">
+    <delete dir="${outputDir}" />
+    <delete dir="${distDir}" />
+   </target>
+   <target name="prepare" depends="clean">
+    <mkdir dir="${outputDir}" />
+    <mkdir dir="${distDir}" />
+   	<mkdir dir="${distDir}/logs" />
+   </target>
+   <target name="compile" depends="prepare">
+     <javac encoding="8859_1" srcdir="${sourceDir}" destdir="${outputDir}" classpathref="classpath"/>
+   </target>
+   <target name="jar" depends="compile">
+   		<jar destfile="${distDir}/${ant.project.name}.jar"
+   	   	         basedir="${outputDir}"
+   	   	         includes="**/*.class">
+   	   	      <manifest>
+   	   	        <attribute name="Main-Class" value="${main-class}" />
+   	   			<attribute name="Manifest-Version" value="1.0" />
+   	   	      </manifest>
+   	   	    </jar>    
+     <copy file="gpx2kml_logging.properties" todir="${distDir}"/>
+   </target>
+	<target name="run" depends="jar">
+	        <java fork="true" classname="${main-class}">
+	        	<arg line="-Djava.util.logging.config.file=gpx2kml_logging.properties"/>
+	            <classpath>
+	                <path refid="classpath"/>
+	                <path location="${distDir}/${ant.project.name}.jar"/>
+	            </classpath>
+	        </java>
+	    </target>
+</project>
+
+    
