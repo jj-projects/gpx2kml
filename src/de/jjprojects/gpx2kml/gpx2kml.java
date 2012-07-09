@@ -55,15 +55,15 @@ public class gpx2kml extends DefaultHandler
   static final String TimeTag       = "time";
   static final String TrackpointTag = "trkpt";
   
-  static final String KMLFolderTag  = "folder";
-  static final String KMLPlaceTag   = "placemark";
-  static final String KMLPointTag   = "point";
+  static final String KMLFolderTag  = "Folder";
+  static final String KMLPlaceTag   = "Placemark";
+  static final String KMLPointTag   = "Point";
   static final String KMLCoordsTag  = "coordinates";
   static final String KMLOpenTag    = "open";
-  static final String KMLDocTag     = "document";
+  static final String KMLDocTag     = "Document";
   static final String KMLDescTag    = "description";
-  static final String KMLStyleTag   = "style";
-  static final String KMLStyleURLTag = "styleurl";
+  static final String KMLStyleTag   = "Style";
+  static final String KMLStyleURLTag = "styleUrl";
   
   static final String KMLTag        = "kml";
   
@@ -210,7 +210,7 @@ public class gpx2kml extends DefaultHandler
         Element kmlElement = new Element (KMLPlaceTag, xmlNS);
         // add the name to the placemark
         Element ele = new Element(NameTag, xmlNS);
-        ele.setText("Point " + pointCount);
+        ele.setText("P" + pointCount);
         kmlElement.addContent (ele);
         // add the styleURL to the placemark
         ele = new Element(KMLStyleURLTag, xmlNS);
@@ -296,14 +296,6 @@ public class gpx2kml extends DefaultHandler
 
   private Element buildRootNode () {
      Element root =  new Element (KMLTag, xmlNS);
-     root.setAttribute("version", "2.2.0");
-     root.setAttribute("creator", "gpx2kml by Joerg Juenger, JJ-Projects");
-     Namespace xsiNS = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-     root.addNamespaceDeclaration (xsiNS);
-
-     root.setAttribute (new Attribute("schemaLocation",
-              "http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd",
-                xsiNS));
 
      return root;
   }
@@ -350,12 +342,12 @@ public class gpx2kml extends DefaultHandler
      ele.setText("random");
      iconStyle.addContent(ele);
      ele = new Element("scale", xmlNS);
-     ele.setText("1.1");
+     ele.setText("0.5");
      iconStyle.addContent(ele);
-     ele = new Element("icon", xmlNS);
+     ele = new Element("Icon", xmlNS);
      iconStyle.addContent(ele);
      Element hrefEle = new Element("href", xmlNS);
-     hrefEle.setText("http://maps.google.com/mapfiles/kml/pal3/icon21.png");
+     hrefEle.setText("http://maps.google.com/mapfiles/kml/paddle/ylw-blank-lv.png");
      ele.addContent(hrefEle);
      
      return eleStyle;
